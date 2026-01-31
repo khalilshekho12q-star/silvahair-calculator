@@ -1,33 +1,241 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
+<meta charset="UTF-8">
+<title>SilvaHair – Hair Calculator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --red:#8B0000;
+  --white:#fff;
+  --gray:#f4f4f4;
+}
+body{
+  font-family: Arial, sans-serif;
+  background: var(--gray);
+  margin:0;
+}
+.container{
+  max-width:420px;
+  background:#fff;
+  margin:20px auto;
+  padding:20px;
+  border-radius:12px;
+}
+h2{
+  color:var(--red);
+  text-align:center;
+}
+.progress{
+  height:6px;
+  background:#ddd;
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:20px;
+}
+.progress div{
+  height:100%;
+  width:0%;
+  background:var(--red);
+}
+.step{display:none;}
+.step.active{display:block;}
+
+button{
+  width:100%;
+  padding:12px;
+  background:var(--red);
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  font-size:16px;
+  margin-top:15px;
+}
+.option{
+  border:1px solid #ccc;
+  padding:12px;
+  border-radius:8px;
+  margin-top:10px;
+  cursor:pointer;
+}
+.option:hover{border-color:var(--red);}
+.lang{
+  text-align:center;
+  margin-bottom:10px;
+}
+.lang span{
+  cursor:pointer;
+  margin:0 5px;
+}
+.result{
+  text-align:center;
+  font-size:18px;
+  margin-top:15px;
+}
+a.cta{
+  display:block;
+  background:var(--red);
+  color:#fff;
+  padding:14px;
+  text-align:center;
+  text-decoration:none;
+  border-radius:10px;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="lang">
+  <span onclick="setLang('ar')">🇸🇦 عربي</span> |
+  <span onclick="setLang('en')">🇬🇧 English</span>
+</div>
+
+<h2 id="title">تقييم زراعة الشعر</h2>
+
+<div class="progress"><div id="bar"></div></div>
+
+<!-- STEP 1 -->
+<div class="step active">
+  <p id="q1">الجنس</p>
+  <div class="option" onclick="next()">ذكر / Male</div>
+  <div class="option" onclick="next()">أنثى / Female</div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step">
+  <p id="q2">العمر</p>
+  <div class="option" onclick="next()">18 – 30</div>
+  <div class="option" onclick="next()">30 – 45</div>
+  <div class="option" onclick="next()">45+</div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step">
+  <p id="q3">مرحلة تساقط الشعر</p>
+  <div class="option" onclick="next()">خفيف / Mild</div>
+  <div class="option" onclick="next()">متوسط / Moderate</div>
+  <div class="option" onclick="next()">شديد / Advanced</div>
+</div>
+
+<!-- STEP 4 -->
+<div class="step">
+  <p id="q4">المنطقة المطلوبة</p>
+  <div class="option" onclick="setArea('front')">مقدمة / Front</div>
+  <div class="option" onclick="setArea('crown')">تاج / Crown</div>
+  <div class="option" onclick="setArea('full')">كامل الرأس / Full</div>
+</div>
+
+<!-- RESULT -->
+<div class="step">
+  <h2 id="resTitle">النتيجة</h2>
+  <div class="result" id="resultText"></div>
+
+  <a class="cta" href="https://wa.me/963939492130">
+    احجز استشارة مجانية | Free Consultation
+  </a>
+</div>
+
+</div>
+
+<script>
+let step=0;
+let area="";
+let steps=document.querySelectorAll('.step');
+let bar=document.getElementById('bar');
+
+function next(){
+  steps[step].classList.remove('active');
+  step++;
+  steps[step].classList.add('active');
+  bar.style.width = ((step)/4)*100 + "%";
+}
+
+function setArea(a){
+  area=a;
+  let txt="";
+  if(a=="front") txt="1800 – 2500 grafts";
+  if(a=="crown") txt="1200 – 2000 grafts";
+  if(a=="full") txt="3500 – 5000 grafts";
+
+  document.getElementById("resultText").innerHTML =
+  "✔️ حالتك مناسبة لزراعة الشعر<br><br>" +
+  "🔹 العدد التقريبي: <b>"+txt+"</b><br><br>" +
+  "📌 للحصول على تقييم أدق، احجز استشارة مجانية";
+
+  next();
+}
+
+function setLang(l){
+  if(l=="en"){
+    title.innerText="Hair Transplant Evaluation";
+  }else{
+    title.innerText="تقييم زراعة الشعر";
+  }
+}
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ar">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>احجز استشارتك - SilvaHair</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f5f5f5;
+            background-color: #f5f5f5;
             padding: 20px;
             text-align: center;
+            color: #333;
         }
         h1 {
             color: #8B0000;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
         }
         input[type="text"], input[type="email"], input[type="date"], input[type="time"], input[type="file"], button {
-            width: 80%;
+            width: 100%;
             padding: 10px;
             margin: 10px 0;
             border-radius: 5px;
             border: 1px solid #ccc;
+            font-size: 16px;
         }
         button {
             background-color: #8B0000;
             color: white;
             cursor: pointer;
+            font-size: 18px;
+            padding: 12px;
         }
         button:hover {
             background-color: #ff4747;
+        }
+        label {
+            text-align: left;
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 20px;
+            color: #8B0000;
+            font-size: 20px;
         }
     </style>
 </head>
@@ -35,36 +243,34 @@
 
     <h1>احجز استشارتك لزراعة الشعر</h1>
 
-    <!-- نموذج حجز الاستشارة مع إضافة الصور -->
-    <form id="consultationForm">
-        <label for="name">الاسم الكامل:</label><br>
-        <input type="text" id="name" name="name" placeholder="أدخل اسمك" required><br>
+    <div class="container">
+        <form id="consultationForm">
+            <label for="name">الاسم الكامل:</label>
+            <input type="text" id="name" name="name" placeholder="أدخل اسمك" required><br>
 
-        <label for="email">البريد الإلكتروني:</label><br>
-        <input type="email" id="email" name="email" placeholder="أدخل بريدك الإلكتروني" required><br>
+            <label for="email">البريد الإلكتروني:</label>
+            <input type="email" id="email" name="email" placeholder="أدخل بريدك الإلكتروني" required><br>
 
-        <label for="phone">رقم الهاتف:</label><br>
-        <input type="text" id="phone" name="phone" placeholder="أدخل رقم هاتفك" required><br>
+            <label for="phone">رقم الهاتف:</label>
+            <input type="text" id="phone" name="phone" placeholder="أدخل رقم هاتفك" required><br>
 
-        <!-- رفع صورة شعرك الحالية -->
-        <label for="photo_current">رفع صورة شعرك الحالية:</label><br>
-        <input type="file" id="photo_current" name="photo_current" accept="image/*"><br>
+            <label for="photo_current">رفع صورة شعرك الحالية:</label>
+            <input type="file" id="photo_current" name="photo_current" accept="image/*"><br>
 
-        <!-- رفع صورة قبل وبعد (اختياري) -->
-        <label for="photo_before_after">رفع صورة قبل وبعد (اختياري):</label><br>
-        <input type="file" id="photo_before_after" name="photo_before_after" accept="image/*"><br>
+            <label for="photo_before_after">رفع صورة قبل وبعد (اختياري):</label>
+            <input type="file" id="photo_before_after" name="photo_before_after" accept="image/*"><br>
 
-        <!-- تحديد تاريخ الاستشارة -->
-        <label for="consult_date">اختر تاريخ الاستشارة:</label><br>
-        <input type="date" id="consult_date" name="consult_date" required><br>
+            <label for="consult_date">اختر تاريخ الاستشارة:</label>
+            <input type="date" id="consult_date" name="consult_date" required><br>
 
-        <!-- تحديد وقت الاستشارة -->
-        <label for="consult_time">اختر وقت الاستشارة:</label><br>
-        <input type="time" id="consult_time" name="consult_time" required><br>
+            <label for="consult_time">اختر وقت الاستشارة:</label>
+            <input type="time" id="consult_time" name="consult_time" required><br>
 
-        <!-- زر الحجز -->
-        <button type="button" onclick="submitForm()">احجز استشارتك</button>
-    </form>
+            <button type="button" onclick="submitForm()">احجز استشارتك</button>
+        </form>
+
+        <div id="result" class="result"></div>
+    </div>
 
     <script>
         function submitForm() {
@@ -74,18 +280,32 @@
             var date = document.getElementById("consult_date").value;
             var time = document.getElementById("consult_time").value;
 
+            // حساب عدد البصيلات (تقدير تقريبي لعدد البصيلات)
+            var estimatedGrafts = calculateGrafts();
+            var resultMessage = `النتيجة: نوصي بزراعة حوالي ${estimatedGrafts} بصيلة.`;
+
             // نص الرسالة التي سيتم إرسالها عبر الواتساب
             var message = `حجز استشارة لزراعة الشعر:
                             \nالاسم: ${name}
                             \nالبريد الإلكتروني: ${email}
                             \nرقم الهاتف: ${phone}
                             \nالتاريخ: ${date}
-                            \nالوقت: ${time}`;
+                            \nالوقت: ${time}
+                            \n${resultMessage}`;
 
             // إنشاء الرابط لفتح الواتساب مباشرة مع الرسالة
             var whatsappURL = `https://wa.me/963939492130?text=${encodeURIComponent(message)}`;
             
             window.open(whatsappURL, '_blank');  // فتح الواتساب مباشرة مع الرسالة
+
+            // عرض النتيجة على الصفحة
+            document.getElementById("result").innerHTML = resultMessage;
+        }
+
+        function calculateGrafts() {
+            // تقدير عدد البصيلات بناءً على عدة عوامل (نموذج بسيط)
+            var randomGrafts = Math.floor(Math.random() * (5000 - 1500 + 1)) + 1500; // مثال: من 1500 إلى 5000
+            return randomGrafts;
         }
     </script>
 
