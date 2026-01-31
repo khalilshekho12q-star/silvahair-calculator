@@ -181,3 +181,89 @@ function setLang(l){
 
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>احجز استشارتك - SilvaHair</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #8B0000;
+        }
+        input[type="text"], input[type="email"], input[type="date"], input[type="time"], input[type="file"], button {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #8B0000;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff4747;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>احجز استشارتك لزراعة الشعر</h1>
+
+    <form id="consultationForm">
+        <label for="name">الاسم الكامل:</label><br>
+        <input type="text" id="name" name="name" placeholder="أدخل اسمك" required><br>
+
+        <label for="email">البريد الإلكتروني:</label><br>
+        <input type="email" id="email" name="email" placeholder="أدخل بريدك الإلكتروني" required><br>
+
+        <label for="phone">رقم الهاتف:</label><br>
+        <input type="text" id="phone" name="phone" placeholder="أدخل رقم هاتفك" required><br>
+
+        <label for="photo_current">رفع صورة شعرك الحالية:</label><br>
+        <input type="file" id="photo_current" name="photo_current" accept="image/*"><br>
+
+        <label for="photo_before_after">رفع صورة قبل وبعد (اختياري):</label><br>
+        <input type="file" id="photo_before_after" name="photo_before_after" accept="image/*"><br>
+
+        <label for="consult_date">اختر تاريخ الاستشارة:</label><br>
+        <input type="date" id="consult_date" name="consult_date" required><br>
+
+        <label for="consult_time">اختر وقت الاستشارة:</label><br>
+        <input type="time" id="consult_time" name="consult_time" required><br>
+
+        <button type="button" onclick="submitForm()">احجز استشارتك</button>
+    </form>
+
+    <script>
+        function submitForm() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var phone = document.getElementById("phone").value;
+            var date = document.getElementById("consult_date").value;
+            var time = document.getElementById("consult_time").value;
+
+            var message = `حجز استشارة لزراعة الشعر:
+                            \nالاسم: ${name}
+                            \nالبريد الإلكتروني: ${email}
+                            \nرقم الهاتف: ${phone}
+                            \nالتاريخ: ${date}
+                            \nالوقت: ${time}`;
+
+            var whatsappURL = `https://wa.me/963939492130?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank');  // فتح الواتساب مباشرة مع الرسالة
+        }
+    </script>
+
+</body>
+</html>
