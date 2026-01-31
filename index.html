@@ -63,18 +63,16 @@
 
     <div class="container">
         <form id="consultationForm">
-            <!-- الخطوة 1: تحليل الشعر -->
+            <!-- الخطوة 1: جمع البيانات الأساسية -->
             <div id="step1">
-                <h2>تحليل الشعر</h2>
-                
-                <!-- سؤال عن الجنس -->
+                <h2>الخطوة 1: تحليل الشعر</h2>
+
                 <label for="gender">جنسك:</label>
                 <select id="gender" name="gender" required>
                     <option value="أنثى">أنثى</option>
                     <option value="ذكر">ذكر</option>
                 </select><br>
 
-                <!-- نمط التساقط -->
                 <label for="hair_loss_pattern">ما هو نمط التساقط لديك؟</label>
                 <select id="hair_loss_pattern" name="hair_loss_pattern" required>
                     <option value="من كامل الرأس">من كامل الرأس</option>
@@ -82,35 +80,40 @@
                     <option value="من الأمام ووسط الرأس">من الأمام ووسط الرأس</option>
                 </select><br>
 
-                <!-- تحاليل مخبرية -->
-                <label for="lab_tests">هل قمت بإجراء أي تحاليل مخبرية من قبل؟ مثل: فيتامين د، حديد، هرمون الوراثة، تعداد الدم كامل</label>
+                <button type="button" onclick="nextStep(2)">التالي</button>
+            </div>
+
+            <!-- الخطوة 2: الأسئلة الطبية والتحاليل المخبرية -->
+            <div id="step2" style="display:none;">
+                <h2>الخطوة 2: التحاليل الطبية</h2>
+                
+                <label for="lab_tests">هل قمت بإجراء أي تحاليل مخبرية من قبل؟ مثل: فيتامين D، حديد، هرمون الوراثة، تعداد الدم كامل</label>
                 <input type="text" id="lab_tests" name="lab_tests" placeholder="أدخل أسماء التحاليل إن وجدت"><br>
 
-                <!-- الوراثة -->
                 <label for="family_history">هل يوجد في العائلة وراثة لتساقط الشعر؟</label>
                 <select id="family_history" name="family_history" required>
                     <option value="نعم">نعم</option>
                     <option value="لا">لا</option>
                 </select><br>
 
-                <button type="button" onclick="nextStep(2)">التالي</button>
+                <button type="button" onclick="nextStep(3)">التالي</button>
             </div>
 
-            <!-- الخطوة 2: رفع الصور -->
-            <div id="step2" style="display:none;">
-                <h2>رفع الصور</h2>
+            <!-- الخطوة 3: رفع الصور -->
+            <div id="step3" style="display:none;">
+                <h2>الخطوة 3: رفع الصور</h2>
                 <label for="photo_current">رفع صورة شعرك الحالية:</label>
                 <input type="file" id="photo_current" name="photo_current" accept="image/*" required><br>
 
                 <label for="photo_before_after">رفع صورة قبل وبعد (اختياري):</label>
                 <input type="file" id="photo_before_after" name="photo_before_after" accept="image/*"><br>
 
-                <button type="button" onclick="nextStep(3)">التالي</button>
+                <button type="button" onclick="nextStep(4)">التالي</button>
             </div>
 
-            <!-- الخطوة 3: اختيار تاريخ ووقت الاستشارة -->
-            <div id="step3" style="display:none;">
-                <h2>اختيار موعد الاستشارة</h2>
+            <!-- الخطوة 4: اختيار موعد الاستشارة -->
+            <div id="step4" style="display:none;">
+                <h2>الخطوة 4: حجز الاستشارة</h2>
                 <label for="consult_date">اختر تاريخ الاستشارة:</label>
                 <input type="date" id="consult_date" name="consult_date" required><br>
 
@@ -141,12 +144,16 @@
                 // جمع البيانات من الخطوة 1
                 userData.gender = document.getElementById('gender').value;
                 userData.hair_loss_pattern = document.getElementById('hair_loss_pattern').value;
-                userData.lab_tests = document.getElementById('lab_tests').value;
-                userData.family_history = document.getElementById('family_history').value;
             }
 
             if (step === 3) {
                 // جمع البيانات من الخطوة 2
+                userData.lab_tests = document.getElementById('lab_tests').value;
+                userData.family_history = document.getElementById('family_history').value;
+            }
+
+            if (step === 4) {
+                // جمع البيانات من الخطوة 3
                 userData.photo_current = document.getElementById('photo_current').files[0];
                 userData.photo_before_after = document.getElementById('photo_before_after').files[0];
             }
@@ -157,7 +164,7 @@
         }
 
         function submitForm() {
-            // جمع البيانات من الخطوة 3
+            // جمع البيانات من الخطوة 4
             userData.consult_date = document.getElementById('consult_date').value;
             userData.consult_time = document.getElementById('consult_time').value;
 
