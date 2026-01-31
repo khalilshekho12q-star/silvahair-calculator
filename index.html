@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>SilvaHair – Hair Calculator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --red:#8B0000;
+  --white:#fff;
+  --gray:#f4f4f4;
+}
+body{
+  font-family: Arial, sans-serif;
+  background: var(--gray);
+  margin:0;
+}
+.container{
+  max-width:420px;
+  background:#fff;
+  margin:20px auto;
+  padding:20px;
+  border-radius:12px;
+}
+h2{
+  color:var(--red);
+  text-align:center;
+}
+.progress{
+  height:6px;
+  background:#ddd;
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:20px;
+}
+.progress div{
+  height:100%;
+  width:0%;
+  background:var(--red);
+}
+.step{display:none;}
+.step.active{display:block;}
+
+button{
+  width:100%;
+  padding:12px;
+  background:var(--red);
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  font-size:16px;
+  margin-top:15px;
+}
+.option{
+  border:1px solid #ccc;
+  padding:12px;
+  border-radius:8px;
+  margin-top:10px;
+  cursor:pointer;
+}
+.option:hover{border-color:var(--red);}
+.lang{
+  text-align:center;
+  margin-bottom:10px;
+}
+.lang span{
+  cursor:pointer;
+  margin:0 5px;
+}
+.result{
+  text-align:center;
+  font-size:18px;
+  margin-top:15px;
+}
+a.cta{
+  display:block;
+  background:var(--red);
+  color:#fff;
+  padding:14px;
+  text-align:center;
+  text-decoration:none;
+  border-radius:10px;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="lang">
+  <span onclick="setLang('ar')">🇸🇦 عربي</span> |
+  <span onclick="setLang('en')">🇬🇧 English</span>
+</div>
+
+<h2 id="title">تقييم زراعة الشعر</h2>
+
+<div class="progress"><div id="bar"></div></div>
+
+<!-- STEP 1 -->
+<div class="step active">
+  <p id="q1">الجنس</p>
+  <div class="option" onclick="next()">ذكر / Male</div>
+  <div class="option" onclick="next()">أنثى / Female</div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step">
+  <p id="q2">العمر</p>
+  <div class="option" onclick="next()">18 – 30</div>
+  <div class="option" onclick="next()">30 – 45</div>
+  <div class="option" onclick="next()">45+</div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step">
+  <p id="q3">مرحلة تساقط الشعر</p>
+  <div class="option" onclick="next()">خفيف / Mild</div>
+  <div class="option" onclick="next()">متوسط / Moderate</div>
+  <div class="option" onclick="next()">شديد / Advanced</div>
+</div>
+
+<!-- STEP 4 -->
+<div class="step">
+  <p id="q4">المنطقة المطلوبة</p>
+  <div class="option" onclick="setArea('front')">مقدمة / Front</div>
+  <div class="option" onclick="setArea('crown')">تاج / Crown</div>
+  <div class="option" onclick="setArea('full')">كامل الرأس / Full</div>
+</div>
+
+<!-- RESULT -->
+<div class="step">
+  <h2 id="resTitle">النتيجة</h2>
+  <div class="result" id="resultText"></div>
+
+  <a class="cta" href="https://wa.me/963939492130">
+    احجز استشارة مجانية | Free Consultation
+  </a>
+</div>
+
+</div>
+
+<script>
+let step=0;
+let area="";
+let steps=document.querySelectorAll('.step');
+let bar=document.getElementById('bar');
+
+function next(){
+  steps[step].classList.remove('active');
+  step++;
+  steps[step].classList.add('active');
+  bar.style.width = ((step)/4)*100 + "%";
+}
+
+function setArea(a){
+  area=a;
+  let txt="";
+  if(a=="front") txt="1800 – 2500 grafts";
+  if(a=="crown") txt="1200 – 2000 grafts";
+  if(a=="full") txt="3500 – 5000 grafts";
+
+  document.getElementById("resultText").innerHTML =
+  "✔️ حالتك مناسبة لزراعة الشعر<br><br>" +
+  "🔹 العدد التقريبي: <b>"+txt+"</b><br><br>" +
+  "📌 للحصول على تقييم أدق، احجز استشارة مجانية";
+
+  next();
+}
+
+function setLang(l){
+  if(l=="en"){
+    title.innerText="Hair Transplant Evaluation";
+  }else{
+    title.innerText="تقييم زراعة الشعر";
+  }
+}
+</script>
+
+</body>
+</html>
