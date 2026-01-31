@@ -63,23 +63,32 @@
 
     <div class="container">
         <form id="consultationForm">
+            <!-- الخطوة 1: تحليل الشعر -->
             <div id="step1">
                 <h2>تحليل الشعر</h2>
-                <label for="hair_density">ما هي كثافة شعرك؟</label>
-                <select id="hair_density" name="hair_density" required>
-                    <option value="قليل">قليل</option>
-                    <option value="متوسط">متوسط</option>
-                    <option value="كثيف">كثيف</option>
+                
+                <!-- سؤال عن الجنس -->
+                <label for="gender">جنسك:</label>
+                <select id="gender" name="gender" required>
+                    <option value="أنثى">أنثى</option>
+                    <option value="ذكر">ذكر</option>
                 </select><br>
 
-                <label for="hair_loss">هل تعاني من تساقط الشعر؟</label>
-                <select id="hair_loss" name="hair_loss" required>
-                    <option value="نعم">نعم</option>
-                    <option value="لا">لا</option>
+                <!-- نمط التساقط -->
+                <label for="hair_loss_pattern">ما هو نمط التساقط لديك؟</label>
+                <select id="hair_loss_pattern" name="hair_loss_pattern" required>
+                    <option value="من كامل الرأس">من كامل الرأس</option>
+                    <option value="كبقع دائرية">كبقع دائرية</option>
+                    <option value="من الأمام ووسط الرأس">من الأمام ووسط الرأس</option>
                 </select><br>
 
-                <label for="donor_area">هل لديك منطقة مانحة جيدة؟</label>
-                <select id="donor_area" name="donor_area" required>
+                <!-- تحاليل مخبرية -->
+                <label for="lab_tests">هل قمت بإجراء أي تحاليل مخبرية من قبل؟ مثل: فيتامين د، حديد، هرمون الوراثة، تعداد الدم كامل</label>
+                <input type="text" id="lab_tests" name="lab_tests" placeholder="أدخل أسماء التحاليل إن وجدت"><br>
+
+                <!-- الوراثة -->
+                <label for="family_history">هل يوجد في العائلة وراثة لتساقط الشعر؟</label>
+                <select id="family_history" name="family_history" required>
                     <option value="نعم">نعم</option>
                     <option value="لا">لا</option>
                 </select><br>
@@ -87,6 +96,7 @@
                 <button type="button" onclick="nextStep(2)">التالي</button>
             </div>
 
+            <!-- الخطوة 2: رفع الصور -->
             <div id="step2" style="display:none;">
                 <h2>رفع الصور</h2>
                 <label for="photo_current">رفع صورة شعرك الحالية:</label>
@@ -98,6 +108,7 @@
                 <button type="button" onclick="nextStep(3)">التالي</button>
             </div>
 
+            <!-- الخطوة 3: اختيار تاريخ ووقت الاستشارة -->
             <div id="step3" style="display:none;">
                 <h2>اختيار موعد الاستشارة</h2>
                 <label for="consult_date">اختر تاريخ الاستشارة:</label>
@@ -115,9 +126,10 @@
 
     <script>
         let userData = {
-            hair_density: '',
-            hair_loss: '',
-            donor_area: '',
+            gender: '',
+            hair_loss_pattern: '',
+            lab_tests: '',
+            family_history: '',
             photo_current: '',
             photo_before_after: '',
             consult_date: '',
@@ -126,36 +138,37 @@
 
         function nextStep(step) {
             if (step === 2) {
-                // Collect data from step 1
-                userData.hair_density = document.getElementById('hair_density').value;
-                userData.hair_loss = document.getElementById('hair_loss').value;
-                userData.donor_area = document.getElementById('donor_area').value;
+                // جمع البيانات من الخطوة 1
+                userData.gender = document.getElementById('gender').value;
+                userData.hair_loss_pattern = document.getElementById('hair_loss_pattern').value;
+                userData.lab_tests = document.getElementById('lab_tests').value;
+                userData.family_history = document.getElementById('family_history').value;
             }
 
             if (step === 3) {
-                // Collect data from step 2
+                // جمع البيانات من الخطوة 2
                 userData.photo_current = document.getElementById('photo_current').files[0];
                 userData.photo_before_after = document.getElementById('photo_before_after').files[0];
             }
 
-            // Show next step and hide current
+            // إظهار الخطوة التالية وإخفاء الحالية
             document.getElementById('step' + (step - 1)).style.display = 'none';
             document.getElementById('step' + step).style.display = 'block';
         }
 
         function submitForm() {
-            // Collect data from step 3
+            // جمع البيانات من الخطوة 3
             userData.consult_date = document.getElementById('consult_date').value;
             userData.consult_time = document.getElementById('consult_time').value;
 
-            // Calculate grafts estimate (dummy function, this can be more complex)
+            // حساب تقدير عدد البصيلات (دالة بسيطة يمكن تحسينها)
             var grafts = calculateGrafts();
             var resultMessage = `تقدير عدد البصيلات المطلوبة: ${grafts} بصيلة.`;
 
-            // Display result
+            // عرض النتيجة
             document.getElementById("result").innerHTML = resultMessage;
 
-            // Send the form data to WhatsApp
+            // إرسال البيانات إلى WhatsApp
             var message = `حجز استشارة لزراعة الشعر:
                             \nالاسم: ${userData.name}
                             \nالبريد الإلكتروني: ${userData.email}
@@ -165,12 +178,12 @@
                             \nتقدير عدد البصيلات: ${grafts}`;
 
             var whatsappURL = `https://wa.me/963939492130?text=${encodeURIComponent(message)}`;
-            window.open(whatsappURL, '_blank');  // Open WhatsApp with the message
+            window.open(whatsappURL, '_blank');  // فتح WhatsApp مع الرسالة
         }
 
         function calculateGrafts() {
-            // Simple estimation for grafts (to be replaced with real logic)
-            return Math.floor(Math.random() * (5000 - 1500 + 1)) + 1500; // Random between 1500 and 5000
+            // تقدير عشوائي لعدد البصيلات
+            return Math.floor(Math.random() * (5000 - 1500 + 1)) + 1500; // عشوائي بين 1500 و 5000
         }
     </script>
 
